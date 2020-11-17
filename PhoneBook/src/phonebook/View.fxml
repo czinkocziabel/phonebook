@@ -27,5 +27,35 @@
             <Font size="23.0" />
          </font>
       </Label>
+      <SplitPane blendMode="MULTIPLY" dividerPositions="0.29797979797979796" layoutY="53.0" prefHeight="597.0" prefWidth="600.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <StackPane id="menuPane" fx:id="menuPane" prefHeight="595.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Pane id="exportPane" fx:id="exportPane" layoutX="10.0" layoutY="10.0" prefHeight="595.0" prefWidth="417.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Pane id="contactPane" fx:id="contactPane" prefHeight="595.0" prefWidth="417.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <TableView prefHeight="446.0" prefWidth="417.0">
+                            <placeholder>
+                                <Label text="Nincs adat." />
+                            </placeholder>
+                          <columns>
+                          </columns>
+                        </TableView>
+                        <TextField id="inputLastName" fx:id="inputLastName" layoutX="106.0" layoutY="465.0" promptText="Kovács" />
+                        <TextField id="inputFirstName" fx:id="inputFirstName" layoutX="106.0" layoutY="505.0" promptText="Gyula" />
+                        <TextField id="inputEmail" fx:id="inputEmail" layoutX="106.0" layoutY="544.0" promptText="gyula@email.hu" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="548.0" prefHeight="17.0" prefWidth="63.0" text="Email:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="509.0" prefHeight="17.0" prefWidth="63.0" text="Keresztnév:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="469.0" text="Vezetéknév:" />
+                        <Button id="addNewContactButton" fx:id="addNewContactButton" layoutX="268.0" layoutY="505.0" mnemonicParsing="false" text="Új kontakt hozzáadása" />
+                     </children>
+                  </Pane>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
    </children>
 </AnchorPane>

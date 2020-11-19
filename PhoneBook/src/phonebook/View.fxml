@@ -38,7 +38,7 @@
                   <Pane id="exportPane" fx:id="exportPane" layoutX="10.0" layoutY="10.0" prefHeight="595.0" prefWidth="417.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <Pane id="contactPane" fx:id="contactPane" prefHeight="595.0" prefWidth="417.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <TableView prefHeight="446.0" prefWidth="417.0">
+                        <TableView id="table" fx:id="table" prefHeight="446.0" prefWidth="417.0">
                             <placeholder>
                                 <Label text="Nincs adat." />
                             </placeholder>

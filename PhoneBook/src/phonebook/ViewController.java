@@ -6,6 +6,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,6 +38,10 @@ public class ViewController implements Initializable {
     @FXML
     Button addNewContactButton;
     @FXML
+    Button exportButton;
+    @FXML
+    TextField inputExportName;
+    @FXML
     StackPane menuPane;
     @FXML
     Pane contactPane;
@@ -54,6 +59,28 @@ public class ViewController implements Initializable {
             new Person("Michael", "Scott", "michael@freemail.com")
     );
 
+    @FXML
+    private void addContact(ActionEvent event) {
+        String email = inputEmail.getText();
+        if (email.length() > 3 && email.contains("@") && email.contains(".")) {
+            data.add(new Person(inputFirstName.getText(), inputLastName.getText(), email));
+            inputFirstName.clear();
+            inputLastName.clear();
+            inputEmail.clear();
+        }
+    }
+
+    @FXML
+    private void exportList(ActionEvent event) {
+        String fileName = inputExportName.getText();
+        fileName = fileName.replaceAll("\\s+", "");
+        if(fileName != null && !fileName.equals("") ){
+        PdfGeneration pdfGeneration = new PdfGeneration();
+        pdfGeneration.pdfGeneration(fileName, data);
+        inputExportName.clear();
+        }
+    }
+    
     private void setTableData() {
         TableColumn lastNameCol = new TableColumn("Vezetéknév");
         lastNameCol.setMinWidth(100);
@@ -150,6 +177,7 @@ public class ViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setTableData();
         setMenuData();
+
     }
 
 }

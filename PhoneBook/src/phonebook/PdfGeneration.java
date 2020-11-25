@@ -3,23 +3,20 @@ package phonebook;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
-import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
-import java.util.Observable;
 import javafx.collections.ObservableList;
 
 public class PdfGeneration {
 
-    public void pdfGeneration(String fileName, ObservableList<Person> text) {
+    public void pdfGeneration(String fileName, ObservableList<Person> data) {
         Document document = new Document();
 
         try {
@@ -32,20 +29,24 @@ public class PdfGeneration {
             image.scaleToFit(rectangle.getWidth(), 114);
             image.setAbsolutePosition(0f, ((float) rectangle.getHeight()) - 114);
             document.add(image);
-
+            
+            //Sortörés
+            document.add(new Paragraph("\n\n\n\n\n"));
+            
             //Táblázat
-            float[] columnWidths = {3,3,4};
+            float[] columnWidths = {2,4,4,6};
             PdfPTable table = new PdfPTable(columnWidths);
             table.setWidthPercentage(100);
             PdfPCell cell = new PdfPCell(new Phrase("Kontaktlista"));
             cell.setBackgroundColor(GrayColor.GRAYWHITE);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            cell.setColspan(3);
+            cell.setColspan(4);
             cell.setBorder(0);
             table.addCell(cell);
             
             table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
             table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell("Sorszám");
             table.addCell("Vazetéknév");
             table.addCell("Keresztnév");
             table.addCell("Email cím");
@@ -53,10 +54,12 @@ public class PdfGeneration {
             table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
             table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
             
-            for(int counter = 1; counter < 10; counter++){
-            table.addCell(String.valueOf(counter));
-            table.addCell("key" + counter);
-            table.addCell("value" + counter);
+            for(int i = 1; i <= data.size(); i++){
+            Person p = data.get(i-1);
+            table.addCell("" + i);    
+            table.addCell(p.getLastName());
+            table.addCell(p.getFirstName());
+            table.addCell(p.getEmail());
             }
             document.add(table);
             

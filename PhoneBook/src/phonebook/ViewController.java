@@ -48,25 +48,25 @@ public class ViewController implements Initializable {
     @FXML
     Pane exportPane;
 
+    private DB db = new DB();
     private final String MENU_CONTACTS = "Kontaktok";
     private final String MENU_LIST = "Lista";
     private final String MENU_EXPORT = "Exportálás";
     private final String MENU_EXIT = "Kilépés";
 
-    private final ObservableList<Person> data = FXCollections.observableArrayList(
-            new Person("Gyula", "Szabó", "gyula@gmail.com"),
-            new Person("Jason", "Bourne", "jason@citromail.hu"),
-            new Person("Michael", "Scott", "michael@freemail.com")
-    );
+    private final ObservableList<Person> data = FXCollections.observableArrayList();
 
     @FXML
     private void addContact(ActionEvent event) {
         String email = inputEmail.getText();
         if (email.length() > 3 && email.contains("@") && email.contains(".")) {
-            data.add(new Person(inputFirstName.getText(), inputLastName.getText(), email));
+            Person newPerson = new Person(inputFirstName.getText(), inputLastName.getText(), email);
+            data.add(newPerson);
             inputFirstName.clear();
             inputLastName.clear();
             inputEmail.clear();
+
+            db.addContact(newPerson);
         }
     }
 
@@ -74,13 +74,13 @@ public class ViewController implements Initializable {
     private void exportList(ActionEvent event) {
         String fileName = inputExportName.getText();
         fileName = fileName.replaceAll("\\s+", "");
-        if(fileName != null && !fileName.equals("") ){
-        PdfGeneration pdfGeneration = new PdfGeneration();
-        pdfGeneration.pdfGeneration(fileName, data);
-        inputExportName.clear();
+        if (fileName != null && !fileName.equals("")) {
+            PdfGeneration pdfGeneration = new PdfGeneration();
+            pdfGeneration.pdfGeneration(fileName, data);
+            inputExportName.clear();
         }
     }
-    
+
     private void setTableData() {
         TableColumn lastNameCol = new TableColumn("Vezetéknév");
         lastNameCol.setMinWidth(100);
@@ -90,8 +90,11 @@ public class ViewController implements Initializable {
         lastNameCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Person, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Person, String> event) {
-                ((Person) event.getTableView().getItems().get(event.getTablePosition().getRow()))
-                        .setLastName(event.getNewValue());
+
+                Person actualPerson = ((Person) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+
+                actualPerson.setLastName(event.getNewValue());
+                db.updateContact(actualPerson);
             }
         });
 
@@ -103,8 +106,10 @@ public class ViewController implements Initializable {
         firstNameCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Person, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Person, String> event) {
-                ((Person) event.getTableView().getItems().get(event.getTablePosition().getRow()))
-                        .setFirstName(event.getNewValue());
+               Person actualPerson = ((Person) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+
+                actualPerson.setFirstName(event.getNewValue());
+                db.updateContact(actualPerson);
             }
         });
 
@@ -116,12 +121,17 @@ public class ViewController implements Initializable {
         emailCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Person, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Person, String> event) {
-                ((Person) event.getTableView().getItems().get(event.getTablePosition().getRow()))
-                        .setEmail(event.getNewValue());
+                Person actualPerson = ((Person) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+
+                actualPerson.setEmail(event.getNewValue());
+                db.updateContact(actualPerson);
             }
         });
 
         table.getColumns().addAll(lastNameCol, firstNameCol, emailCol);
+
+        data.addAll(db.getAllContacts());
+
         table.setItems(data);
 
     }

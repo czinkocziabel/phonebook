@@ -10,8 +10,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -21,12 +24,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class ViewController implements Initializable {
 
+//<editor-fold defaultstate="collapsed" desc="FXML">
     @FXML
     TableView table;
     @FXML
@@ -47,6 +52,11 @@ public class ViewController implements Initializable {
     Pane contactPane;
     @FXML
     Pane exportPane;
+    @FXML
+    AnchorPane anchor;
+    @FXML
+    SplitPane mainSplit;
+//</editor-fold>
 
     private DB db = new DB();
     private final String MENU_CONTACTS = "Kontaktok";
@@ -67,7 +77,7 @@ public class ViewController implements Initializable {
             inputEmail.clear();
 
             db.addContact(newPerson);
-        }
+        }else alert("Adj meg egy valódi email címet.");
     }
 
     @FXML
@@ -78,7 +88,10 @@ public class ViewController implements Initializable {
             PdfGeneration pdfGeneration = new PdfGeneration();
             pdfGeneration.pdfGeneration(fileName, data);
             inputExportName.clear();
+        } else {
+            alert("Adj meg egy fájl nevet!");
         }
+
     }
 
     private void setTableData() {
@@ -106,7 +119,7 @@ public class ViewController implements Initializable {
         firstNameCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Person, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Person, String> event) {
-               Person actualPerson = ((Person) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+                Person actualPerson = ((Person) event.getTableView().getItems().get(event.getTablePosition().getRow()));
 
                 actualPerson.setFirstName(event.getNewValue());
                 db.updateContact(actualPerson);
@@ -181,6 +194,28 @@ public class ViewController implements Initializable {
 
             }
         });
+    }
+
+    private void alert(String text) {
+        mainSplit.setDisable(true);
+        mainSplit.setOpacity(0.4);
+
+        Label label = new Label(text);
+        Button alertbutton = new Button("OK");
+        VBox vBox = new VBox(label, alertbutton);
+        vBox.setAlignment(Pos.CENTER);
+        alertbutton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                mainSplit.setDisable(false);
+                mainSplit.setOpacity(1);
+                vBox.setVisible(false);
+            }
+        });
+
+        anchor.getChildren().add(vBox);
+        AnchorPane.setTopAnchor(vBox, 300.0);
+        AnchorPane.setLeftAnchor(vBox, 300.0);
     }
 
     @Override

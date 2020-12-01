@@ -9,9 +9,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="anchor" fx:id="anchor" prefHeight="650.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phonebook.ViewController">
+<AnchorPane id="anchor" fx:id="anchor" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phonebook.ViewController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="650.0" stroke="BLACK" strokeType="INSIDE" width="600.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="650.0" stroke="BLACK" strokeType="INSIDE" width="800.0">
          <fill>
             <LinearGradient endX="0.1952380952380952" endY="1.0" startY="0.46190476190476193">
                <stops>
@@ -22,12 +22,12 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label layoutX="232.0" layoutY="14.0" text="Telefonkönyv">
+      <Label layoutX="332.0" layoutY="14.0" text="Telefonkönyv">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <SplitPane id="mainSplit" fx:id="mainSplit" blendMode="MULTIPLY" dividerPositions="0.29797979797979796" layoutY="53.0" prefHeight="597.0" prefWidth="600.0">
+      <SplitPane id="mainSplit" fx:id="mainSplit" blendMode="MULTIPLY" dividerPositions="0.29797979797979796" layoutY="53.0" prefHeight="597.0" prefWidth="800.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -37,35 +37,35 @@
                <children>
                   <Pane id="exportPane" fx:id="exportPane" layoutX="10.0" layoutY="10.0" prefHeight="595.0" prefWidth="417.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label layoutX="80.0" layoutY="33.0" text="Exportálás PDF-be">
+                        <Label layoutX="150.0" layoutY="53.0" text="Exportálás PDF-be">
                            <font>
                               <Font size="32.0" />
                            </font>
                         </Label>
-                        <Label layoutX="176.0" layoutY="135.0" text="Fájl neve:">
+                        <Label layoutX="246.0" layoutY="155.0" text="Fájl neve:">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <TextField id="inputExportName" fx:id="inputExportName" alignment="CENTER" layoutX="88.0" layoutY="172.0" prefHeight="25.0" prefWidth="242.0" />
-                        <Button id="exportButton" fx:id="exportButton" layoutX="166.0" layoutY="235.0" mnemonicParsing="false" onAction="#exportList" text="PDF Mentése" />
+                        <TextField id="inputExportName" fx:id="inputExportName" alignment="CENTER" layoutX="158.0" layoutY="192.0" prefHeight="25.0" prefWidth="242.0" />
+                        <Button id="exportButton" fx:id="exportButton" layoutX="236.0" layoutY="255.0" mnemonicParsing="false" onAction="#exportList" text="PDF Mentése" />
                      </children></Pane>
                   <Pane id="contactPane" fx:id="contactPane" prefHeight="595.0" prefWidth="417.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <TableView id="table" fx:id="table" editable="true" prefHeight="446.0" prefWidth="417.0">
+                        <TableView id="table" fx:id="table" editable="true" prefHeight="446.0" prefWidth="557.0">
                             <placeholder>
                                 <Label text="Nincs adat." />
                             </placeholder>
                           <columns>
                           </columns>
                         </TableView>
-                        <TextField id="inputLastName" fx:id="inputLastName" layoutX="106.0" layoutY="465.0" promptText="Kovács" />
-                        <TextField id="inputFirstName" fx:id="inputFirstName" layoutX="106.0" layoutY="505.0" promptText="Gyula" />
-                        <TextField id="inputEmail" fx:id="inputEmail" layoutX="106.0" layoutY="544.0" promptText="gyula@email.hu" />
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="548.0" prefHeight="17.0" prefWidth="63.0" text="Email:" />
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="509.0" prefHeight="17.0" prefWidth="63.0" text="Keresztnév:" />
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="469.0" text="Vezetéknév:" />
-                        <Button id="addNewContactButton" fx:id="addNewContactButton" layoutX="268.0" layoutY="505.0" mnemonicParsing="false" onAction="#addContact" text="Új kontakt hozzáadása" />
+                        <TextField id="inputLastName" fx:id="inputLastName" layoutX="169.0" layoutY="465.0" promptText="Kovács" />
+                        <TextField id="inputFirstName" fx:id="inputFirstName" layoutX="169.0" layoutY="505.0" promptText="Gyula" />
+                        <TextField id="inputEmail" fx:id="inputEmail" layoutX="169.0" layoutY="544.0" promptText="gyula@email.hu" />
+                        <Label alignment="CENTER_RIGHT" layoutX="91.0" layoutY="548.0" prefHeight="17.0" prefWidth="63.0" text="Email:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="91.0" layoutY="509.0" prefHeight="17.0" prefWidth="63.0" text="Keresztnév:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="91.0" layoutY="469.0" text="Vezetéknév:" />
+                        <Button id="addNewContactButton" fx:id="addNewContactButton" layoutX="331.0" layoutY="505.0" mnemonicParsing="false" onAction="#addContact" text="Új kontakt hozzáadása" />
                      </children>
                   </Pane>
                </children></AnchorPane>

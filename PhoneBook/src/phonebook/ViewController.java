@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -28,6 +30,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
 public class ViewController implements Initializable {
 
@@ -77,7 +80,9 @@ public class ViewController implements Initializable {
             inputEmail.clear();
 
             db.addContact(newPerson);
-        }else alert("Adj meg egy valódi email címet.");
+        } else {
+            alert("Adj meg egy valódi email címet.");
+        }
     }
 
     @FXML
@@ -96,7 +101,7 @@ public class ViewController implements Initializable {
 
     private void setTableData() {
         TableColumn lastNameCol = new TableColumn("Vezetéknév");
-        lastNameCol.setMinWidth(100);
+        lastNameCol.setMinWidth(140);
         lastNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         lastNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("lastName"));
 
@@ -112,7 +117,7 @@ public class ViewController implements Initializable {
         });
 
         TableColumn firstNameCol = new TableColumn("Keresztnév");
-        firstNameCol.setMinWidth(100);
+        firstNameCol.setMinWidth(140);
         firstNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         firstNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("firstName"));
 
@@ -141,7 +146,43 @@ public class ViewController implements Initializable {
             }
         });
 
-        table.getColumns().addAll(lastNameCol, firstNameCol, emailCol);
+        TableColumn deleteCol = new TableColumn("Törlés");
+        deleteCol.setMinWidth(50);
+
+        Callback<TableColumn<Person, String>, TableCell<Person, String>> cellFactory
+                = new Callback<TableColumn<Person, String>, TableCell<Person, String>>() {
+            @Override
+            public TableCell<Person, String> call(TableColumn<Person, String> param) {
+                final TableCell<Person, String> cell = new TableCell<Person, String>() {
+                    final Button btn = new Button("Törlés");
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            btn.setOnAction((ActionEvent event) -> {
+                                Person person = getTableView().getItems().get(getIndex());
+                                db.removeContact(person);
+                                data.remove(person);
+                            });
+                            setGraphic(btn);
+                            setText(null);
+                        }
+
+                    }
+
+                };
+                return cell;
+            }
+
+        };
+        deleteCol.setCellFactory(cellFactory);
+
+        table.getColumns().addAll(lastNameCol, firstNameCol, emailCol, deleteCol);
 
         data.addAll(db.getAllContacts());
 
